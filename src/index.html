@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      __name__
+    </title>
+    <style>
+      .option {
+        margin-left:1em;
+        margin-right:1em;
+      }
+      .checkbox {
+        margin-left:1em;
+        margin-right:0.3em;
+      }
+      .checkboxLabel {
+        margin-right:1em;
+      }
+    </style>
+    <script>
+      function getQueryString(type){
+        let str = "type="+encodeURIComponent(type)
+        if (findText.value.length>0){
+          str = str.concat("&find=", encodeURIComponent(findText.value))
+          str = str.concat("&replace=", encodeURIComponent(replaceText.value))
+          if (!caseSensitiveCheckbox.checked){
+            str = str.concat("&insensitive")
+          }
+          if (!equipOnlyCheckbox.checked){
+            str = str.concat("&areas")
+          }
+        }
+        return str
+      }
+      function changeHREF(){
+        downloader.href = "/__name__/index?"+getQueryString("download")
+      }
+      function preview(){
+        let req = new XMLHttpRequest()
+        req.open("POST","/__name__/index",true)
+        req.setRequestHeader("content-type", "application/x-www-form-urlencoded")
+        req.onreadystatechange = function(){
+          if (this.readyState==4){
+            if (this.status==200){
+              previewDiv.innerHTML = this.responseText
+            }else if (this.status==401){
+              previewDiv.innerHTML = ""
+              alert("Unauthorized access. Please log in.")
+            }else{
+              alert("Unknown error with response code: "+this.status)
+            }
+          }
+        }
+        req.send(getQueryString("preview"))
+      }
+    </script>
+  </head>
+  <body>
+    <div style="text-align:center">
+      <h1>__name__</h1>
+      <button class="option" onclick="preview()">Preview</button>
+      <a class="option" target="_blank" download="GeoData.xml" href="#" onclick="changeHREF()" id="downloader">Download</a>
+      <a class="option" target="_blank" href="https://github.com/automatic-controls/geo-xml-export-addon/blob/main/README.md">Documentation</a>
+      <h3>Regular Expression Search For Display Names</h3>
+      <input type="checkbox" id="caseSensitiveCheckbox" class="checkbox" checked>
+      <label for="caseSensitiveCheckbox" class="checkboxLabel">Case-Sensitive</label>
+      <input type="checkbox" id="equipOnlyCheckbox" class="checkbox" checked>
+      <label for="equipOnlyCheckbox" class="checkboxLabel">Match Equipment Only</label>
+      <br><br>
+      <label for="findText">Find:</label>
+      <input type="text" id="findText" size="40">
+      <label for="replaceText" style="margin-left:2em">Replace:</label>
+      <input type="text" id="replaceText" size="40">
+    </div>
+    <div id="previewDiv" style="margin-left:1em"></div>
+  </body>
+</html>

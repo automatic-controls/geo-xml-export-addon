@@ -1,0 +1,6 @@
+<extension version="1">
+  <name>GeoTreeExportXML</name>
+  <description>Exports structural geographic tree data as an XML file intended for use in Inkscape to create SVG graphics.</description>
+  <version>1.0.0</version>
+  <vendor>Automatic Controls Equipment Systems, Inc.</vendor>
+</extension>
