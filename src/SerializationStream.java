@@ -68,7 +68,7 @@ public class SerializationStream {
     return data[pos++];
   }
   public boolean readBoolean(){
-    return readByte()==1;
+    return readByte()!=0;
   }
   public int readInt(){
     int x = 0;

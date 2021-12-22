@@ -10,7 +10,7 @@ public class Utilities {
    */
   public static String escape(String str){
     int len = str.length();
-    StringBuilder sb = new StringBuilder(len+10);
+    StringBuilder sb = new StringBuilder(len+16);
     char c;
     int j;
     for (int i=0;i<len;++i){
@@ -45,6 +45,22 @@ public class Utilities {
       }else if (j<1114111 && (j<=55296 || j>57343)){
         sb.append("&#").append(Integer.toString(j)).append(";");
       }
+    }
+    return sb.toString();
+  }
+  /**
+   * Escapes backslashes, single quotes, and double quotes.
+   */
+  public static String escapeJS(String str){
+    int len = str.length();
+    StringBuilder sb = new StringBuilder(len+16);
+    char c;
+    for (int i=0;i<len;++i){
+      c = str.charAt(i);
+      if (c=='\\' || c=='\'' || c=='"'){
+        sb.append('\\');
+      }
+      sb.append(c);
     }
     return sb.toString();
   }

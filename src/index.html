@@ -36,7 +36,7 @@
         downloader.href = "/__name__/index?"+getQueryString("download")
       }
       function preview(){
-        let req = new XMLHttpRequest()
+        const req = new XMLHttpRequest()
         req.open("POST","/__name__/index",true)
         req.setRequestHeader("content-type", "application/x-www-form-urlencoded")
         req.onreadystatechange = function(){
@@ -45,13 +45,88 @@
               previewDiv.innerHTML = this.responseText
             }else if (this.status==401){
               previewDiv.innerHTML = ""
-              alert("Unauthorized access. Please log in.")
+              alert("Unauthorized access. Please login.")
+            }else if (this.status==400){
+              alert(this.responseText)
             }else{
-              alert("Unknown error with response code: "+this.status)
+              alert("Unexpected error occurred with status: "+this.status)
             }
           }
         }
         req.send(getQueryString("preview"))
+      }
+      function setRegex(name,a,b,c,d){
+        bindRegex(name);
+        findText.value = a;
+        replaceText.value = b;
+        caseSensitiveCheckbox.checked = c;
+        equipOnlyCheckbox.checked = d;
+      }
+      function clearRegex(){
+        findText.value = "";
+        replaceText.value = "";
+        caseSensitiveCheckbox.checked = true;
+        equipOnlyCheckbox.checked = true;
+      }
+      function bindRegex(name){
+        regexName = name;
+        selectedRegex.innerHTML = name;
+        deselectRegex.style = "display:inline";
+      }
+      function unbindRegex(){
+        regexName = undefined;
+        selectedRegex.innerHTML = "None";
+        deselectRegex.style = "display:none";
+      }
+      function saveRegex(){
+        let name = regexName;
+        if (!name){
+          if (findText.value.length===0){
+            alert("Please enter a non-empty regular expression.");
+            return;
+          }else{
+            name = prompt("Enter a name for your regular expression.");
+          }
+        }
+        if (name && name.length>0){
+          const req = new XMLHttpRequest()
+          req.open("POST","/__name__/index",true)
+          req.setRequestHeader("content-type", "application/x-www-form-urlencoded")
+          req.onreadystatechange = function(){
+            if (this.readyState==4){
+              if (this.status==200){
+                refreshRegex();
+                if (findText.value.length>0){
+                  bindRegex(name);
+                }else{
+                  unbindRegex();
+                }
+              }else if (this.status==401){
+                previewDiv.innerHTML = ""
+                alert("Unauthorized access. Please login.")
+              }else if (this.status==400){
+                alert(this.responseText)
+              }else{
+                alert("Unexpected error occurred with status: "+this.status)
+              }
+            }
+          }
+          req.send("name="+encodeURIComponent(name)+"&"+getQueryString("save"))
+        }
+      }
+      function refreshRegex(){
+        unbindRegex();
+        const req = new XMLHttpRequest()
+        req.open("POST","/__name__/index",true)
+        req.setRequestHeader("content-type", "application/x-www-form-urlencoded")
+        req.onreadystatechange = function(){
+          if (this.readyState==4){
+            if (this.status==200){
+              storedRegex.innerHTML = this.responseText
+            }
+          }
+        }
+        req.send("type=refresh")
       }
     </script>
   </head>
@@ -61,7 +136,11 @@
       <button class="option" onclick="preview()">Preview</button>
       <a class="option" target="_blank" download="GeoData.xml" href="#" onclick="changeHREF()" id="downloader">Download</a>
       <a class="option" target="_blank" href="https://github.com/automatic-controls/geo-xml-export-addon/blob/main/README.md">Documentation</a>
-      <h3>Regular Expression Search For Display Names</h3>
+      <h3>Regular Expression Display Name Transform</h3>
+      <span class="option">Selected: <span id="selectedRegex"></span></span>
+      <button class="option" id="deselectRegex" onclick="unbindRegex()">Deselect</button>
+      <button class="option" onclick="clearRegex()">Clear</button>
+      <button class="option" onclick="saveRegex()">Save</button>
       <input type="checkbox" id="caseSensitiveCheckbox" class="checkbox" checked>
       <label for="caseSensitiveCheckbox" class="checkboxLabel">Case-Sensitive</label>
       <input type="checkbox" id="equipOnlyCheckbox" class="checkbox" checked>
@@ -71,7 +150,13 @@
       <input type="text" id="findText" size="40">
       <label for="replaceText" style="margin-left:2em">Replace:</label>
       <input type="text" id="replaceText" size="40">
+      <br><br>
+      <span id="storedRegex"></span>
     </div>
     <div id="previewDiv" style="margin-left:1em"></div>
+    <script>
+      var regexName;
+      refreshRegex();
+    </script>
   </body>
 </html>
