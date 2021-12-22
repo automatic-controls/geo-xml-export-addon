@@ -34,7 +34,7 @@ This *WebCTRL* add-on exports structural geographic tree data as an *XML* file i
 
 ## Basic Usage
 
-Navigate to this add-on's main page (e.g, *localhost/GeoTreeExportXML*) and press the *Download* button.
+If your server requires signed add-ons, copy the authenticating certificate [*ACES.cer*](https://github.com/automatic-controls/webctrl-addon-dev/blob/main/ACES.cer?raw=true) to the *./addons* directory of your *WebCTRL* installation folder. Install [*GeoTreeExportXML.addon*](https://github.com/automatic-controls/geo-xml-export-addon/releases/latest/download/GeoTreeExportXML.addon) using the *WebCTRL* interface. Navigate to this add-on's main page (e.g, *localhost/GeoTreeExportXML*) and press the *Download* button.
 
 ## Advanced Usage
 
