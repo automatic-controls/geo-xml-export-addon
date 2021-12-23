@@ -1,3 +1,12 @@
+JDK Version:
+openjdk 16.0.1 2021-04-20
+OpenJDK Runtime Environment (build 16.0.1+9-24)
+OpenJDK 64-Bit Server VM (build 16.0.1+9-24, mixed mode, sharing)
+
+Compilation Flags:
+--release 11
+
+Runtime Dependencies:
 addonsupport-api-addon-1.7.0
 alarmmanager-api-addon-1.7.0
 bacnet-api-addon-1.7.012
@@ -5,3 +14,5 @@ directaccess-api-addon-1.7.0
 tomcat-embed-core-9.0.37
 webaccess-api-addon-1.7.0
 xdatabase-api-addon-1.7.0
+
+Packaged Dependencies:
