@@ -1,5 +1,7 @@
 # GeoTreeExportXML
 
+WebCTRL is a trademark of Automated Logic Corporation.  Any other trademarks mentioned herein are the property of their respective owners.
+
 This *WebCTRL* add-on exports structural geographic tree data as an *XML* file intended for use in *Inkscape* to create *SVG* graphics. The graphics markup tool provided by *SiteBuilder* serves a similar purpose; however, the markup tool includes lots of irrelevant information, and the *WebCTRL* server must be shutdown in order to use *SiteBuilder*. This add-on only includes the necessary information, which speeds up *XML* generation and decreases file-size by as much as *95%*.
 
 *Inkscape* uses the *XML* file to create graphical associations that are linked into *WebCTRL* by the reference names of the corresponding locations on the geographic tree. *Inkscape* populates the label text for a given association by looking at the display name provided by the *XML* file. By default, the display names in the downloaded *XML* file exactly match the display names on the geographic tree. Entries in the *XML* file are ordered using a custom alpha-numeric sort.
@@ -34,7 +36,7 @@ This *WebCTRL* add-on exports structural geographic tree data as an *XML* file i
 
 ## Basic Usage
 
-If your server requires signed add-ons, copy the authenticating certificate [*ACES.cer*](https://github.com/automatic-controls/webctrl-addon-dev/blob/main/ACES.cer?raw=true) to the *./addons* directory of your *WebCTRL* installation folder. Install [*GeoTreeExportXML.addon*](https://github.com/automatic-controls/geo-xml-export-addon/releases/latest/download/GeoTreeExportXML.addon) using the *WebCTRL* interface. Navigate to this add-on's main page (e.g, *localhost/GeoTreeExportXML*) and press the *Download* button.
+If your server requires signed add-ons, copy the authenticating certificate [*ACES.cer*](https://github.com/automatic-controls/addon-dev-script/blob/main/ACES.cer?raw=true) to the *./addons* directory of your *WebCTRL* installation folder. Install [*GeoTreeExportXML.addon*](https://github.com/automatic-controls/geo-xml-export-addon/releases/latest/download/GeoTreeExportXML.addon) using the *WebCTRL* interface. Navigate to this add-on's main page (e.g, *localhost/GeoTreeExportXML*) and press the *Download* button.
 
 ## Advanced Usage
 
